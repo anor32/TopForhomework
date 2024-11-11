@@ -29,7 +29,6 @@ from os.path import split
 # print("Обновленые жанры кино:",new_tuple)
 
 
-
 # 3 task
 
 
@@ -44,3 +43,18 @@ from os.path import split
 # print(onlY_my_tings)
 # print(onlY_he_tings)
 # print(my_and_he_only)
+
+
+# 4 task
+
+
+cinema_genres = ["комедия", "экшн", "пеплум", "триллер", "комедия", "пеплум"]
+cinema_genres = set(cinema_genres)
+new_genres = {"драма", "Хорор"}
+print(cinema_genres)
+cinema_genres = cinema_genres.union(new_genres)
+print(cinema_genres)
+cinema_genres.discard("экшн")
+print(cinema_genres)
+print(cinema_genres.pop())
+print(list(cinema_genres))
