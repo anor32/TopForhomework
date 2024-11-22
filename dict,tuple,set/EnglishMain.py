@@ -16,7 +16,7 @@ answers = base_program(user_level)
 result = get_result(answers)
 print("ваш Ранг", result)
 
-write_stats(user_name,user_level,result)
+write_stats(user_name, user_level, result)
 
 # возможно функции для прочитывания файла
 # не надо было  заводить  в отдельный файл ну  я решил так
