@@ -23,18 +23,21 @@ class Motherboard(Powerunit):
             "VideoCard": 100,
             "Cpu": 60,
             "Ram": 20,
-            "SSD": 20}
+            "Ssd": 20}
 
-    def distibute_voltage(self,*obj_components):
+    def distibute_voltage(self, *obj_components):
+
         if self.check_power():
-            for component in  obj_components:
+            for component in obj_components:
                 name = type(component).__name__
 
                 if name in self.required_power:
                     component.power = self.required_power[name]
                 else:
-                    print("не найден компонент")
+                    print(f"не найден компонент {name}")
             print("Напряжение распределено")
+
+
 class Cpu:
     def __init__(self, hertz, cores):
         self.hertz = hertz
@@ -67,7 +70,7 @@ class Ram:
         print(f"данные {data} удалены ")
 
 
-class SSD:
+class Ssd:
     def __init__(self, ssd_capacity):
         self.ssd_capacity = ssd_capacity
         self.ssd_data = []
@@ -118,27 +121,86 @@ power_supply = Powerunit(600)
 motherboard = Motherboard("Chipset A", 600)
 cpu = Cpu(3.4, 4)
 ram = Ram(16, 3200)
-ssd = SSD(512)  # 512GB SSD
+ssd = Ssd(512)  # 512GB SSD
 videocard = VideoCard("NVIDIA GeForce RTX 3060", 12)  # GPU
-
 
 computer = Computer(power_supply, motherboard, cpu, ram, ssd, videocard)
 
 
-computer.power_on()
+# computer.power_on()
+#
+# motherboard.distibute_voltage(cpu,ssd,videocard,ram)
+#
+# ram.load_data("Program Data 1")
+# ram.load_data("Program Data 2")
+# ram.unload_data("Program Data 1")
+#
+#
+# ssd.save_data("File 1")
+# ssd.save_data("File 2")
+# ssd.delete_data("File 1")
+#
+#
+# cpu.activate_turbo("OFF")
+#
+# videocard.display_image()
 
-motherboard.distibute_voltage(cpu,ssd,videocard,ram)
-
-ram.load_data("Program Data 1")
-ram.load_data("Program Data 2")
-ram.unload_data("Program Data 1")
-
-
-ssd.save_data("File 1")
-ssd.save_data("File 2")
-ssd.delete_data("File 1")
+# так как в задании не указано должен ли я все эти методы вызывать через класс компьютера я их вызвал от их экземпляров
+# в задании сказано реализовать через наследование и композицию я не понял что конкретно имеется ввиду
+# что я должен в одном задании использовать инаследование и композицию или что я должен  сделать это задание дважды
+# я выбрал второй вариант
+# опять же в задании не указано должен ли я во всех классах использовать наследование или достаточно только одного компьютера
+# я выберу тоже второй вариант я просто класс компьютер перепишу
 
 
-cpu.activate_turbo("OFF")
 
-videocard.display_image()
+
+
+
+class Сomputerinh(Motherboard, Cpu, Ram, Ssd, VideoCard):
+    def __init__(self, power, chipset, hertz, cores, size_ram, ram_hertz, ssd_capacity, model_card, memory_card):
+
+        Powerunit.__init__(self, power)
+        Motherboard.__init__(self, chipset,power)
+        Cpu.__init__(self, hertz, cores)
+        Ram.__init__(self, size_ram, ram_hertz)
+        Ssd.__init__(self, ssd_capacity)
+        VideoCard.__init__(self, model_card, memory_card)
+        self.power = power
+        self.chipset = chipset
+        self.hertz = hertz
+        self.cores = cores
+        self.size_ram = size_ram
+        self.ram_hertz = ram_hertz
+        self.ssd_capacity = ssd_capacity
+        self.model_card = model_card
+        self.memory_card = memory_card
+
+    def power_on(self):
+        if self.check_power():
+            self.display_image()
+
+
+comput = Сomputerinh (
+    600,  'X570',
+    3.8,8,
+    16,3200,
+    512,'RTX 3060'
+    ,6)
+
+
+print(comput.check_power())
+comput.distibute_voltage(cpu,ram,ssd)
+comput.activate_turbo("On")
+comput.save_data("file1")
+comput.delete_data("file1")
+
+comput.load_data("b")
+print(comput.dates)
+comput.unload_data("b")
+print(comput.dates)
+comput.display_image()
+
+comput.power_on()
+
+# как понял так и сделал в задаче не особо описано как это должно выглядить сделал на свое усмотрение
